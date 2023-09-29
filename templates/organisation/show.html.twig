@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des associations{% endblock %}
+
+{% block body %}
+    <h1>Liste des associations</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nom de l'association</th>
+                <th>Description</th>
+                <th>Date de création</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ organisation.name }}</td>
+                <td>{{ organisation.description }}</td>
+                <td>{{ organisation.createdAt|date }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
