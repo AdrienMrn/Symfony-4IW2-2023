@@ -5,20 +5,29 @@
 {% block body %}
     <h1>Liste des associations</h1>
 
+    <a href="{{ path('organisation_new') }}">Création d'une nouvelle assocation</a>
+
     <table>
         <thead>
             <tr>
                 <th>Nom de l'association</th>
                 <th>Description</th>
                 <th>Date de création</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for organisation in organisations %}
             <tr>
-                <td>{{ organisation.name }}</td>
+                <td>
+                    <a href="{{ path('organisation_show', {'id': organisation.id}) }}">{{ organisation.name }}</a>
+                </td>
                 <td>{{ organisation.description }}</td>
                 <td>{{ organisation.createdAt|date }}</td>
+                <td>
+                    <a href="{{ path('organisation_update', {'id': organisation.id}) }}">Editer</a>
+                    <a href="{{ path('organisation_delete', {'id': organisation.id, 'token': csrf_token('delete' ~ organisation.id)}) }}" onclick="confirm('Sur ?')">Supprimer</a>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
