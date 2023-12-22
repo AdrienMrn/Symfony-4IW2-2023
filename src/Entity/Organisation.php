@@ -131,6 +131,11 @@ class Organisation
         return $this->members;
     }
 
+    public function isMember(User $user): bool
+    {
+        return $this->members->contains($user);
+    }
+
     public function addMember(User $member): static
     {
         if (!$this->members->contains($member)) {

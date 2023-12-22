@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ organisation.name }}{% endblock %}
+
+{% block body %}
+    <h1>{{ organisation.name }}</h1>
+
+    {% embed '_composants/_card.html.twig'%}
+        {% block title %}
+            <h2 class="text-2xl">{{ organisation.name }}</h2>
+        {% endblock %}
+        {% block body %}
+            {{ organisation.description }}
+            {{ organisation.createdAt|date }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

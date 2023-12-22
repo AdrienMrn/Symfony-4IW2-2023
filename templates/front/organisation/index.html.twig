@@ -8,7 +8,9 @@
     {% for organisation in organisations %}
         {% embed '_composants/_card.html.twig'%}
             {% block title %}
+                <a href="{{ path('front_organisation_show', {'id': organisation.id}) }}">
                 <h2 class="text-2xl">{{ organisation.name }}</h2>
+                </a>
             {% endblock %}
             {% block body %}
                 {{ organisation.description }}
