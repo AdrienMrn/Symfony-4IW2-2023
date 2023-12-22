@@ -5,8 +5,6 @@
 {% block body %}
     <h1>Liste des associations</h1>
 
-    <a href="{{ path('organisation_new') }}">Création d'une nouvelle assocation</a>
-
     {% for organisation in organisations %}
         {% embed '_composants/_card.html.twig'%}
             {% block title %}
@@ -15,9 +13,6 @@
             {% block body %}
                 {{ organisation.description }}
                 {{ organisation.createdAt|date }}
-                <a href="{{ path('organisation_show', {'id': organisation.id}) }}">Voir</a>
-                <a href="{{ path('organisation_update', {'id': organisation.id}) }}">Editer</a>
-                <a href="{{ path('organisation_delete', {'id': organisation.id, 'token': csrf_token('delete' ~ organisation.id)}) }}" onclick="confirm('Sur ?')">Supprimer</a>
             {% endblock %}
         {% endembed %}
     {% endfor %}

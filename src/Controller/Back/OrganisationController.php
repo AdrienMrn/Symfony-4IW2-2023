@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Back;
 
 use App\Entity\Organisation;
 use App\Form\OrganisationType;
 use App\Repository\OrganisationRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +20,7 @@ class OrganisationController extends AbstractController
     {
         $organisations = $organisationRepository->findAll();
 
-        return $this->render('organisation/index.html.twig', [
+        return $this->render('back/organisation/index.html.twig', [
             'organisations' => $organisations,
         ]);
     }
@@ -27,12 +28,13 @@ class OrganisationController extends AbstractController
     #[Route('/{id}', name: 'show', requirements: ['id' => '\d{1,3}'], methods: 'get')]
     public function show(Organisation $organisation): Response
     {
-        return $this->render('organisation/show.html.twig', [
+        return $this->render('back/organisation/show.html.twig', [
             'organisation' => $organisation,
         ]);
     }
 
     #[Route('/new', name: 'new', methods: ['get', 'post'])]
+    #[Security('is_granted("ROLE_COORDINATOR")')]
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
         $organisation = new Organisation();
@@ -45,17 +47,18 @@ class OrganisationController extends AbstractController
 
             $this->addFlash('success', "L'association {$organisation->getName()} a bien été créée");
 
-            return $this->redirectToRoute('organisation_show', [
+            return $this->redirectToRoute('back_organisation_show', [
                 'id' => $organisation->getId()
             ]);
         }
 
-        return $this->render('organisation/new.html.twig', [
+        return $this->render('back/organisation/new.html.twig', [
             'form' => $form->createView()
         ]);
     }
 
     #[Route('/update/{id}', name: 'update', requirements: ['id' => '\d{1,3}'], methods: ['get', 'post'])]
+    #[Security('is_granted("ROLE_COORDINATOR")')]
     public function update(Organisation $organisation, Request $request, EntityManagerInterface $manager): Response
     {
         $form = $this->createForm(OrganisationType::class, $organisation);
@@ -66,18 +69,19 @@ class OrganisationController extends AbstractController
 
             $this->addFlash('success', "L'association {$organisation->getName()} a bien été modifiée");
 
-            return $this->redirectToRoute('organisation_show', [
+            return $this->redirectToRoute('back_organisation_show', [
                 'id' => $organisation->getId()
             ]);
         }
 
-        return $this->render('organisation/update.html.twig', [
+        return $this->render('back/organisation/update.html.twig', [
             'form' => $form,
             'organisation' => $organisation
         ]);
     }
 
     #[Route('/delete/{id}/{token}', name: 'delete', requirements: ['id' => '\d{1,3}'], methods: 'get')]
+    #[Security('is_granted("ROLE_COORDINATOR")')]
     public function delete(Organisation $organisation, string $token, EntityManagerInterface $manager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $organisation->getId(), $token)) {
@@ -87,6 +91,6 @@ class OrganisationController extends AbstractController
             $this->addFlash('success', "L'association {$organisation->getName()} a bien été supprimée");
         }
 
-        return $this->redirectToRoute('organisation_index');
+        return $this->redirectToRoute('back_organisation_index');
     }
 }
