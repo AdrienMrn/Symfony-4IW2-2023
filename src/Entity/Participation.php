@@ -8,8 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ParticipationRepository::class)]
 class Participation
 {
-    use Traits\Timestampable;
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
