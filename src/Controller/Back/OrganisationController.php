@@ -25,14 +25,6 @@ class OrganisationController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'show', requirements: ['id' => '\d{1,3}'], methods: 'get')]
-    public function show(Organisation $organisation): Response
-    {
-        return $this->render('back/organisation/show.html.twig', [
-            'organisation' => $organisation,
-        ]);
-    }
-
     #[Route('/new', name: 'new', methods: ['get', 'post'])]
     #[Security('is_granted("ROLE_COORDINATOR")')]
     public function new(Request $request, EntityManagerInterface $manager): Response
@@ -48,12 +40,20 @@ class OrganisationController extends AbstractController
             $this->addFlash('success', "L'association {$organisation->getName()} a bien été créée");
 
             return $this->redirectToRoute('back_organisation_show', [
-                'id' => $organisation->getId()
+                'slug' => $organisation->getSlug()
             ]);
         }
 
         return $this->render('back/organisation/new.html.twig', [
             'form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/{slug}', name: 'show', methods: 'get')]
+    public function show(Organisation $organisation): Response
+    {
+        return $this->render('back/organisation/show.html.twig', [
+            'organisation' => $organisation,
         ]);
     }
 
@@ -70,7 +70,7 @@ class OrganisationController extends AbstractController
             $this->addFlash('success', "L'association {$organisation->getName()} a bien été modifiée");
 
             return $this->redirectToRoute('back_organisation_show', [
-                'id' => $organisation->getId()
+                'slug' => $organisation->getSlug()
             ]);
         }
 

@@ -14,7 +14,7 @@ class OrganisationFixtures extends Fixture
 
         $organisation = (new Organisation())
             ->setName('Jeux de rôle')
-            ->setCreatedAt(new \DateTimeImmutable())
+            ->setCreatedAt(new \DateTime())
             ->setDescription('Organisation de parties de jeux de rôle')
         ;
         $manager->persist($organisation);
@@ -23,7 +23,7 @@ class OrganisationFixtures extends Fixture
         for ($i = 0; $i < 10; ++$i) {
             $organisation = (new Organisation())
                 ->setName($faker->name)
-                ->setCreatedAt(new \DateTimeImmutable())
+                ->setCreatedAt(new \DateTime())
                 ->setDescription($faker->sentence(50))
             ;
             $manager->persist($organisation);

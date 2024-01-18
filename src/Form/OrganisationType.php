@@ -30,11 +30,6 @@ class OrganisationType extends AbstractType
                     'placeholder' => 'Description de l\'organisation',
                 ],
             ])
-            ->add('createdAt', DateType::class, [
-                'label' => 'Date de création de l\'organisation',
-                'widget' => 'single_text',
-                'input' => 'datetime_immutable',
-            ])
             ->add('category', EntityType::class, [
                 'label' => 'Catégorie de l\'organisation',
                 'class' => Category::class,

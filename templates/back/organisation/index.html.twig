@@ -17,7 +17,7 @@
             {% block body %}
                 {{ organisation.description }}
                 {{ organisation.createdAt|date }}
-                <a href="{{ path('back_organisation_show', {'id': organisation.id}) }}">Voir</a>
+                <a href="{{ path('back_organisation_show', {'slug': organisation.slug}) }}">Voir</a>
                 {% if is_granted('ROLE_COORDINATOR') %}
                 <a href="{{ path('back_organisation_update', {'id': organisation.id}) }}">Editer</a>
                 <a href="{{ path('back_organisation_delete', {'id': organisation.id, 'token': csrf_token('delete' ~ organisation.id)}) }}" onclick="confirm('Sur ?')">Supprimer</a>
