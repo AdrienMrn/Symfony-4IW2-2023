@@ -1,0 +1,19 @@
+{% use 'form_div_layout.html.twig' %}
+
+{%- block form_label -%}
+    {%- set label_attr = label_attr|merge({ class: label_attr.class|default(label_class|default('block text-red-400')) }) -%}
+    {{- parent() -}}
+{%- endblock form_label -%}
+
+{%- block textarea_row -%}
+    {%- set widget_attr = {} -%}
+    {%- if help is not empty -%}
+        {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
+    {%- endif -%}
+    <div class="inline-flex" {% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
+        {{- form_errors(form) -}}
+        {{- form_label(form) -}}
+        {{- form_widget(form, widget_attr) -}}
+        {{- form_help(form) -}}
+    </div>
+{%- endblock textarea_row -%}

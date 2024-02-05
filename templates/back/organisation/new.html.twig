@@ -5,8 +5,18 @@
 {% block body %}
     <h1>Création d'une association</h1>
 
+    {# form(form) #}
+
     {{ form_start(form )}}
+        {# form_row(form.name) #}
+
+        {{ form_widget(form.name) }}
+        {{ form_label(form.name) }}
+        {{ form_help(form.name) }}
+        {{ form_errors(form.name) }}
+
         {{ form_rest(form) }}
+
         <button type="submit">Envoyer</button>
     {{ form_end(form) }}
 {% endblock %}
